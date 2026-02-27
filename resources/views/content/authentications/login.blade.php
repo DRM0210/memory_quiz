@@ -3,116 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emt App Admin</title>
+    <title>{{ $company && $company->name ? $company->name . ' - Admin' : config('variables.templateName', 'Emt App Admin') }}</title>
     <link rel="icon" type="image/x-icon" href="{{ $company && $company->icon ? asset($company->icon) : asset('assets/img/favicon/icon.png') }}" />
 <style>
     @import "https://unpkg.com/open-props";
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; }
 
-*:focus {
-  outline-offset: 4px; }
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-button,
-input {
-  font: inherit; }
+    *:focus {
+        outline-offset: 4px;
+    }
 
-.page {
-  color: white;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-image: url({{ asset('assets/img/backgrounds/bc.jpg') }});
-  display: grid;
-  grid-template-areas: "main";
-  padding: var(--size-4);
-  min-height: 100vh;
-  font-family: var(--font-sans); }
-  .page__main {
-    grid-area: main; }
+    button,
+    input {
+        font: inherit;
+    }
 
-.main {
-  display: grid;
-  align-items: center; }
-  .main__login-form {
-    margin-inline: auto;
-    max-width: 25em; }
+    .page {
+        color: white;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-image: url({{ asset('assets/img/backgrounds/bc.jpg') }});
+        display: grid;
+        grid-template-areas: "main";
+        padding: var(--size-4);
+        min-height: 100vh;
+        font-family: var(--font-sans);
+    }
 
-.login-form {
-  color: #433532;
-  display: grid;
-  position: relative;
-  width: 100%;
-  padding: var(--size-8);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 1em; }
-  .login-form::before {
-    background: rgba(255, 255, 255, 0.3);
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    content: "";
-    z-index: -4000;
-    box-shadow: 0 0 2em rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px); }
-  .login-form__title {
-    margin-bottom: var(--size-6);
-    font-weight: var(--font-weight-6);
-    font-size: var(--font-size-5);
-    text-align: center; }
-  .login-form__label {
-    margin-bottom: var(--size-4);
-    display: grid; }
-  .login-form__input {
-    color: inherit;
-    width: 100%;
-    padding: 0.8em;
-    border: 0;
-      border-radius: var(--radius-2); }
-  .login-form__footer {
-    margin-top: var(--size-5);
-    display: flex;
-    gap: var(--size-2);
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center; }
+    .page__main {
+        grid-area: main;
+    }
+
+    .main {
+        display: grid;
+        align-items: center;
+    }
+
+    .main__login-form {
+        margin-inline: auto;
+        max-width: 26rem;
+        width: 100%;
+    }
+
+    .login-form {
+        color: #433532;
+        display: grid;
+        row-gap: var(--size-4);
+        position: relative;
+        width: 100%;
+        padding: var(--size-8);
+        border-radius: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        background: radial-gradient(circle at top left,
+                rgba(255, 255, 255, 0.65),
+                rgba(255, 255, 255, 0.3));
+        backdrop-filter: blur(10px);
+    }
+
+    .login-form__title {
+        margin-top: var(--size-4);
+        margin-bottom: var(--size-4);
+        font-weight: var(--font-weight-6);
+        font-size: var(--font-size-5);
+        text-align: center;
+    }
+
+    .login-form__logo {
+        display: block;
+        margin-inline: auto;
+        margin-bottom: var(--size-4);
+        max-width: 8rem;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .login-form__label {
+        display: grid;
+        row-gap: 0.35rem;
+        font-size: 0.95rem;
+    }
+
+    .login-form__input {
+        color: inherit;
+        width: 100%;
+        padding: 0.8em 0.9em;
+        border-radius: var(--radius-2);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background-color: rgba(255, 255, 255, 0.85);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    .login-form__input:focus {
+        border-color: #c53b0d;
+        box-shadow: 0 0 0 3px rgba(197, 59, 13, 0.28);
+        background-color: #ffffff;
+    }
+
+    .login-form__footer {
+        margin-top: var(--size-5);
+        display: flex;
+        gap: var(--size-2);
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
     @media screen and (min-width: 36em) {
-      .login-form__footer {
-        flex-direction: row; } }
-  .login-form__link {
-    color: inherit;
-    text-decoration: 0; }
+        .login-form__footer {
+            flex-direction: row;
+        }
+    }
+
+    .login-form__link {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.9;
+    }
+
     .login-form__link:hover {
-      text-decoration: underline; }
+        text-decoration: underline;
+        opacity: 1;
+    }
 
-.primary-btn {
-  color: white;
-  background-color: #433532;
-  padding: 0.9em 1.4em;
-  border: 0;
-    border-radius: var(--radius-2);
-  cursor: pointer; }
-  .primary-btn:hover {
-    background-color: #c53b0d; }
+    .primary-btn {
+        color: white;
+        background-image: linear-gradient(135deg, #433532, #c53b0d);
+        padding: 0.9em 1.4em;
+        border: 0;
+        border-radius: var(--radius-2);
+        cursor: pointer;
+        width: 100%;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
 
-.sr-only {
-  position: absolute;
-  margin: -1px;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  border-width: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap; }
+    .primary-btn:hover {
+        filter: brightness(1.03);
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
 
+    .primary-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
+    }
 
-
-
+    .sr-only {
+        position: absolute;
+        margin: -1px;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        border-width: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
 </style>
 </head>
 <body class="page">
@@ -120,7 +179,7 @@ input {
     <main class="main page__main">
         <form class="login-form main__login-form" action="{{ route('login') }}" method="POST">
             @csrf
-            <img src="{{ $company && $company->logo ? asset($company->logo) : asset('assets/img/favicon/ispl_logo.png') }}" class="img-fluid" alt="Company Logo">
+            <img src="{{ $company && $company->logo ? asset($company->logo) : asset('assets/img/favicon/ispl_logo.png') }}" class="login-form__logo" alt="Company Logo">
             <h3 class="login-form__title">Login</h3>
             <label class="login-form__label" for="email">
                 <span class="sr-only">Username</span>
@@ -144,35 +203,6 @@ input {
             <!-- <div class="login-form__footer"><a class="login-form__link" href="#">Forget Password?</a><a class="login-form__link" href="#">Sign Up</a></div> -->
         </form>
     </main>
-    <script>
-      function spark(event) {
-  let i = document.createElement("i");
-  // Set the position of the element based on the mouse event
-  i.style.left = event.pageX + "px";
-  i.style.top = event.pageY + "px";
-
-  // Randomly scale the element
-  i.style.transform = `scale(${Math.random() * 2 + 1})`;
-
-  // Set random transition values
-  i.style.setProperty("--x", getRandomTransitionValue());
-  i.style.setProperty("--y", getRandomTransitionValue());
-  document.body.appendChild(i);
-
-  // Remove the element after 2 seconds
-  setTimeout(() => {
-    document.body.removeChild(i);
-  }, 2000);
-};
-
-function getRandomTransitionValue() {
-  // Generate a random value between -200 and 200 pixels
-  return `${Math.random() * 400 - 200}px`;
-}
-
-
-
-    </script>
 </body>
 
 </html>
