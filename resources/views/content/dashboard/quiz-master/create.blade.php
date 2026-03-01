@@ -62,10 +62,22 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="col-sm-2">
+                                                <span class="h6 small bg-white text-dark pl-2 pr-2">Memory Time (seconds) <span class="text-danger">*</span></span>
+                                            </label>
+                                            <input type="number" class="form-control mt-n3" name="memory_time" value="{{ old('memory_time', 60) }}" min="0" required>
+                                            <small class="text-muted">Time to view memory page image.</small>
+                                            @if ($errors->has('memory_time'))
+                                                <span class="invalid-feedback d-block"><strong>{{ $errors->first('memory_time') }}</strong></span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-2">
                                                 <span class="h6 small bg-white text-dark pl-2 pr-2">Quiz Time (seconds) <span class="text-danger">*</span></span>
                                             </label>
-                                            <input type="number" class="form-control mt-n3" name="quiz_time" value="{{ old('quiz_time', 60) }}" min="0" required>
-                                            <small class="text-muted">Time to view memory page / complete quiz.</small>
+                                            <input type="number" class="form-control mt-n3" name="quiz_time" value="{{ old('quiz_time', 300) }}" min="0" required>
+                                            <small class="text-muted">Overall time limit for entire quiz (memory + questions).</small>
                                             @if ($errors->has('quiz_time'))
                                                 <span class="invalid-feedback d-block"><strong>{{ $errors->first('quiz_time') }}</strong></span>
                                             @endif

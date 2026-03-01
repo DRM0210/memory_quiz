@@ -49,13 +49,32 @@ use App\Http\Controllers\authentications\DashboardController;
 use App\Http\Controllers\authentications\UserController;
 use App\Http\Controllers\dashboard\QuizTypeController;
 use App\Http\Controllers\dashboard\QuizMasterController;
+use App\Http\Controllers\dashboard\StudentController;
+use App\Http\Controllers\authentications\StudentAuthController;
+use App\Http\Controllers\authentications\StudentQuizController;
 
-// Main Page Route
-//Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+// Main Page: / = Student login
+Route::get('/', [StudentAuthController::class, 'loginForm'])->name('home');
 
-Route::get('', [LoginController::class, 'loginForm'])->name('loginForm');
-Route::get('/login', [LoginController::class, 'qwerty'])->name('qwerty');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+// Admin login: /admin and /admin/login
+Route::get('/admin', [LoginController::class, 'loginForm'])->name('loginForm');
+Route::get('/admin/login', [LoginController::class, 'qwerty'])->name('qwerty');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
+
+// Student frontend (public)
+Route::get('/student/signup', [StudentAuthController::class, 'signupForm'])->name('student.signup');
+Route::post('/student/signup', [StudentAuthController::class, 'signup'])->name('student.signup.post');
+Route::get('/student/login', [StudentAuthController::class, 'loginForm'])->name('student.login');
+Route::post('/student/login', [StudentAuthController::class, 'login'])->name('student.login.post');
+
+// Student (authenticated)
+Route::middleware(['auth:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/dashboard', [StudentAuthController::class, 'dashboard'])->name('dashboard');
+    Route::post('/logout', [StudentAuthController::class, 'logout'])->name('logout');
+    Route::get('/quiz/{id}/play', [StudentQuizController::class, 'play'])->name('quiz.play');
+    Route::post('/quiz/{id}/submit', [StudentQuizController::class, 'submit'])->name('quiz.submit');
+    Route::get('/quiz/attempt/{attempt}/result', [StudentQuizController::class, 'result'])->name('quiz.result');
+});
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -101,6 +120,15 @@ Route::group(['middleware' => 'auth'], function () {
       Route::post('/{id}/questions/store', 'questionStore')->name('question.store');
       Route::get('/{masterId}/questions/edit/{questionId}', 'questionEdit')->name('question.edit');
       Route::post('/{masterId}/questions/update/{questionId}', 'questionUpdate')->name('question.update');
+    });
+
+  Route::controller(StudentController::class)
+    ->middleware('RoleMiddleware:1')
+    ->prefix('students')
+    ->name('students.')
+    ->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::post('/status', 'status')->name('status');
     });
 });
 

@@ -29,6 +29,7 @@ class QuizMasterController extends Controller
             'quiz_type_id' => 'required|exists:quiz_types,id',
             'name' => 'required|string|max:255',
             'memory_page_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'memory_time' => 'required|integer|min:0',
             'quiz_time' => 'required|integer|min:0',
             'status' => 'nullable|in:0,1',
         ]);
@@ -41,6 +42,7 @@ class QuizMasterController extends Controller
         $data = new QuizMaster();
         $data->quiz_type_id = $request->quiz_type_id;
         $data->name = $request->name;
+        $data->memory_time = $request->memory_time ?? 0;
         $data->quiz_time = $request->quiz_time ?? 0;
         $data->status = $request->has('status') ? (int) $request->status : 1;
 
@@ -69,6 +71,7 @@ class QuizMasterController extends Controller
             'quiz_type_id' => 'required|exists:quiz_types,id',
             'name' => 'required|string|max:255',
             'memory_page_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'memory_time' => 'required|integer|min:0',
             'quiz_time' => 'required|integer|min:0',
             'status' => 'nullable|in:0,1',
         ]);
@@ -76,6 +79,7 @@ class QuizMasterController extends Controller
         $data = QuizMaster::findOrFail($id);
         $data->quiz_type_id = $request->quiz_type_id;
         $data->name = $request->name;
+        $data->memory_time = $request->memory_time ?? 0;
         $data->quiz_time = $request->quiz_time ?? 0;
         $data->status = $request->has('status') ? (int) $request->status : 1;
 

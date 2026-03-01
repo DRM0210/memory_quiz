@@ -204,7 +204,38 @@
           </a>
         </li>
 
+        <li class="menu-item {{ Route::currentRouteName() === 'students.index' ? 'active' : '' }}">
+          <a href="{{ route('students.index') }}"
+              class="menu-link {{ Route::currentRouteName() === 'students.index' ? 'active' : '' }}">
+              <i class="menu-icon tf-icons bx bx-user-plus"></i>
+              <div>Students</div>
+          </a>
+        </li>
+
     </ul>
+
+    @if(isset($studentStats))
+    <div class="sidebar-student-card px-3 pb-3">
+        <div class="card border-0 shadow-none bg-label-primary">
+            <div class="card-body p-3">
+                <h6 class="card-title text-primary mb-2">Student Details</h6>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>Total</span>
+                    <strong>{{ $studentStats['total'] }}</strong>
+                </div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>Active</span>
+                    <strong class="text-success">{{ $studentStats['active'] }}</strong>
+                </div>
+                <div class="d-flex justify-content-between small mb-2">
+                    <span>Inactive</span>
+                    <strong class="text-danger">{{ $studentStats['inactive'] }}</strong>
+                </div>
+                <a href="{{ route('students.index') }}" class="btn btn-sm btn-primary w-100">Manage Students</a>
+            </div>
+        </div>
+    </div>
+    @endif
 
 
     <li class="nav-item navbar-dropdown dropdown-user dropdown">

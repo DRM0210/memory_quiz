@@ -29,7 +29,7 @@
                                     <a href="{{ route('quiz-master.edit', $quizMaster->id) }}" class="btn btn-md btn-success">Back to Quiz</a>
                                 </span>
                             </span>
-                            <p class="text-muted small mb-2">Quiz Type: {{ $quizMaster->quizType->name ?? '-' }} | Quiz Time: {{ $quizMaster->quiz_time }} sec | Status: {{ $quizMaster->status ? 'Active' : 'Inactive' }}</p>
+                            <p class="text-muted small mb-2">Quiz Type: {{ $quizMaster->quizType->name ?? '-' }} | Memory: {{ $quizMaster->memory_time ?? 0 }}s | Total: {{ $quizMaster->quiz_time }}s | Status: {{ $quizMaster->status ? 'Active' : 'Inactive' }}</p>
                             @if($quizMaster->memory_page_image)
                                 <p class="small"><strong>Memory page:</strong> <img src="{{ asset($quizMaster->memory_page_image) }}" alt="" class="q-thumb ms-1"></p>
                             @endif

@@ -15,11 +15,13 @@ class QuizMaster extends Model
         'quiz_type_id',
         'name',
         'memory_page_image',
+        'memory_time',
         'quiz_time',
         'status',
     ];
 
     protected $casts = [
+        'memory_time' => 'integer',
         'quiz_time' => 'integer',
         'status' => 'integer',
     ];

@@ -1,13 +1,12 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Quiz Master')
+@section('title', 'Students')
 @section('page-script')
     <script src="{{ asset('assets/js/pages-account-settings-account.js') }}"></script>
 @endsection
 @section('content')
     <style>
         .btn-info, .btn-danger, .btn-success { width: fit-content; height: 20px; margin-top: -3px; padding: 10px; }
-        .quiz-master-thumb { max-width: 60px; max-height: 50px; object-fit: cover; border-radius: 4px; }
     </style>
 
     <div class="row">
@@ -23,36 +22,29 @@
                     <div class="row">
                         <div class="col-lg-9 border p-2">
                             <span class="w-100 d-block p-1 fw-bold text-dark" style="background: #e5e5e5;">
-                                Quiz Master
-                                <span class="float-end"><a href="{{ route('quiz-master.create') }}" class="btn btn-info">Add Quiz</a></span>
+                                Students
                             </span>
                             <div class="table-responsive text-nowrap table-bordered">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Memory Page</th>
+                                            <th>#</th>
                                             <th>Name</th>
-                                            <th>Quiz Type</th>
-                                            <th>Memory Time</th>
-                                            <th>Quiz Time</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Address</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach($data as $item)
+                                        @forelse($data as $item)
                                         <tr>
-                                            <td>
-                                                @if($item->memory_page_image)
-                                                    <img src="{{ asset($item->memory_page_image) }}" alt="" class="quiz-master-thumb">
-                                                @else
-                                                    <span class="text-muted">-</span>
-                                                @endif
-                                            </td>
+                                            <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td>{{ $item->quizType->name ?? '-' }}</td>
-                                            <td>{{ $item->memory_time ?? 0 }} sec</td>
-                                            <td>{{ $item->quiz_time }} sec</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td>{{ \Str::limit($item->address, 30) ?: '-' }}</td>
                                             <td>
                                                 @if($item->status == 1)
                                                     <a class="btn btn-md btn-success changeState" href="javascript:void(0)" data-state="1" data-id="{{ $item->id }}">Active</a>
@@ -61,12 +53,14 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-md btn-info" href="{{ route('quiz-master.questions', $item->id) }}"><i class="bx bx-list-check me-2"></i> Questions</a>
-                                                <a class="btn btn-md btn-info" href="{{ route('quiz-master.edit', $item->id) }}"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                                <a class="btn btn-md btn-danger deleteQuizMaster" data-id="{{ $item->id }}" href="javascript:void(0)"><i class="bx bx-trash me-2"></i> Delete</a>
+                                                <span class="text-muted">—</span>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted py-4">No students yet.</td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -83,13 +77,7 @@
         $(".changeState").click(function(){
             var id = $(this).attr('data-id'); var state = $(this).attr('data-state'); var _token = $('meta[name="csrf-token"]').attr('content');
             if (confirm("Change status?")) {
-                $.ajax({ type: 'POST', url: "{{ route('quiz-master.status') }}", data: { id: id, state: state, _token: _token }, success: function(){ location.reload(); } });
-            }
-        });
-        $(".deleteQuizMaster").click(function(){
-            var id = $(this).attr('data-id'); var _token = $('meta[name="csrf-token"]').attr('content');
-            if (confirm("Delete this quiz and all its questions?")) {
-                $.ajax({ type: 'POST', url: "{{ route('quiz-master.delete') }}", data: { id: id, _token: _token }, success: function(){ location.reload(); } });
+                $.ajax({ type: 'POST', url: "{{ route('students.status') }}", data: { id: id, state: state, _token: _token }, success: function(){ location.reload(); } });
             }
         });
     });

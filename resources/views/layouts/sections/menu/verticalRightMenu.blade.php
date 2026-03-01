@@ -130,4 +130,24 @@
       </div>
   </div>
 
+  <!-- Students -->
+  <div class="card accordion-item">
+      <h2 class="accordion-header" id="headingStudents">
+          <button type="button" class="accordion-button {{ Route::is(['students.*']) ? '' : 'collapsed' }}" data-bs-toggle="collapse" data-bs-target="#accordionStudents" aria-expanded="{{ Route::is(['students.*']) ? 'true' : 'false' }}" aria-controls="accordionStudents">
+              Students
+          </button>
+      </h2>
+      <div id="accordionStudents" class="accordion-collapse collapse {{ Route::is(['students.*']) ? 'show' : '' }}" aria-labelledby="headingStudents">
+          <div class="accordion-body">
+              <ul class="menu-sub d-block right-link">
+                  <li class="menu-item {{ Route::is(['students.index']) ? 'active' : '' }} pt-2 pb-2">
+                      <a href="{{ route('students.index') }}" class="menu-link">
+                          <div>Manage Students</div>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
 </div>
