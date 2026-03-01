@@ -48,6 +48,7 @@ use App\Http\Controllers\authentications\{LoginController, SettingController};
 use App\Http\Controllers\authentications\DashboardController;
 use App\Http\Controllers\authentications\UserController;
 use App\Http\Controllers\dashboard\QuizTypeController;
+use App\Http\Controllers\dashboard\QuizMasterController;
 
 // Main Page Route
 //Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
@@ -80,6 +81,26 @@ Route::group(['middleware' => 'auth'], function () {
       Route::post('/update/{id}', 'update')->name('update');
       Route::post('/status', 'status')->name('status');
       Route::post('/delete', 'destroy')->name('delete');
+    });
+
+  Route::controller(QuizMasterController::class)
+    ->middleware('RoleMiddleware:1')
+    ->prefix('quiz-master')
+    ->name('quiz-master.')
+    ->group(function () {
+      Route::post('/questions/delete', 'questionDestroy')->name('question.delete');
+      Route::get('/', 'index')->name('index');
+      Route::get('/create', 'create')->name('create');
+      Route::post('/store', 'store')->name('store');
+      Route::get('/edit/{id}', 'edit')->name('edit');
+      Route::post('/update/{id}', 'update')->name('update');
+      Route::post('/status', 'status')->name('status');
+      Route::post('/delete', 'destroy')->name('delete');
+      Route::get('/{id}/questions', 'questions')->name('questions');
+      Route::get('/{id}/questions/create', 'questionCreate')->name('question.create');
+      Route::post('/{id}/questions/store', 'questionStore')->name('question.store');
+      Route::get('/{masterId}/questions/edit/{questionId}', 'questionEdit')->name('question.edit');
+      Route::post('/{masterId}/questions/update/{questionId}', 'questionUpdate')->name('question.update');
     });
 });
 

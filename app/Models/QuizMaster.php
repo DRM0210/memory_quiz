@@ -7,27 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class QuizType extends Model
+class QuizMaster extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'quiz_type_id',
         'name',
-        'description',
-        'time_duration',
-        'no_of_questions',
-        'image',
+        'memory_page_image',
+        'quiz_time',
         'status',
     ];
 
     protected $casts = [
-        'time_duration' => 'integer',
-        'no_of_questions' => 'integer',
+        'quiz_time' => 'integer',
         'status' => 'integer',
     ];
 
-    public function quizMasters(): HasMany
+    public function quizType(): BelongsTo
     {
-        return $this->hasMany(QuizMaster::class, 'quiz_type_id');
+        return $this->belongsTo(QuizType::class, 'quiz_type_id');
+    }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(QuizQuestion::class, 'quiz_master_id')->orderBy('sort_order');
     }
 }

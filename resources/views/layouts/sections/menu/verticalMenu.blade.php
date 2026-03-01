@@ -196,6 +196,14 @@
           </a>
         </li>
 
+        <li class="menu-item {{ Route::currentRouteName() === 'quiz-master.index' || Route::currentRouteName() === 'quiz-master.create' || Route::currentRouteName() === 'quiz-master.edit' || Route::currentRouteName() === 'quiz-master.questions' ? 'active' : '' }}">
+          <a href="{{ route('quiz-master.index') }}"
+              class="menu-link {{ Route::currentRouteName() === 'quiz-master.index' || Route::currentRouteName() === 'quiz-master.create' || Route::currentRouteName() === 'quiz-master.edit' || Route::currentRouteName() === 'quiz-master.questions' ? 'active' : '' }}">
+              <i class="menu-icon tf-icons bx bx-question-mark"></i>
+              <div>Quiz Master</div>
+          </a>
+        </li>
+
     </ul>
 
 

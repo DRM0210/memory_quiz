@@ -110,4 +110,24 @@
       </div>
   </div>
 
+  <!-- Quiz Master -->
+  <div class="card accordion-item">
+      <h2 class="accordion-header" id="headingQuizMaster">
+          <button type="button" class="accordion-button {{ Route::is(['quiz-master.*']) ? '' : 'collapsed' }}" data-bs-toggle="collapse" data-bs-target="#accordionQuizMaster" aria-expanded="{{ Route::is(['quiz-master.*']) ? 'true' : 'false' }}" aria-controls="accordionQuizMaster">
+              Quiz Master
+          </button>
+      </h2>
+      <div id="accordionQuizMaster" class="accordion-collapse collapse {{ Route::is(['quiz-master.*']) ? 'show' : '' }}" aria-labelledby="headingQuizMaster">
+          <div class="accordion-body">
+              <ul class="menu-sub d-block right-link">
+                  <li class="menu-item {{ Route::is(['quiz-master.index', 'quiz-master.create', 'quiz-master.edit', 'quiz-master.questions']) ? 'active' : '' }} pt-2 pb-2">
+                      <a href="{{ route('quiz-master.index') }}" class="menu-link">
+                          <div>Quizzes</div>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
 </div>
