@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentAuthController extends Controller
 {
+    public function landing()
+    {
+        if (Auth::guard('student')->check()) {
+            return redirect()->route('student.dashboard');
+        }
+        $company = CompanyInfo::first();
+        return view('content.landing', compact('company'));
+    }
+
     public function signupForm()
     {
         if (Auth::guard('student')->check()) {
