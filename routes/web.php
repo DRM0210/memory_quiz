@@ -54,7 +54,7 @@ use App\Http\Controllers\authentications\StudentAuthController;
 use App\Http\Controllers\authentications\StudentQuizController;
 
 // Landing page at /
-Route::get('/', [StudentAuthController::class, 'landing'])->name('home');
+Route::get('/drm', [StudentAuthController::class, 'landing'])->name('home');
 
 // Admin login: /admin and /admin/login
 Route::get('/admin', [LoginController::class, 'loginForm'])->name('loginForm');
